@@ -7,7 +7,7 @@ const port = process.env.PORT;
 const cors = require('cors');
 
 app.use(cors({
-    origin: 'https://youtube-ejazul.netlify.app' || 'http://localhost:5173',
+    origin: ['https://youtube-ejazul.netlify.app', 'http://localhost:5173'],
     credentials: true
 }))
 
