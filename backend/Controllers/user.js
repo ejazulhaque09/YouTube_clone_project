@@ -52,7 +52,10 @@ exports.login = async (req, res) => {
         // verify the password and generate a jwt token if valid
         if(user && (await bcrypt.compare(password, user.password))){
             const token = jwt.sign({userId: user._id}, secretKey)
-            res.cookie('token', token);
+            res.cookie('token', token, {
+                sameSite: 'none',
+                secure: true
+            });
             res.json({
                 success: true,
                 msg: "LoggedIn Successfully",
