@@ -87,11 +87,11 @@ exports.editVideo = async (req, res) =>{
     try{
         const video = await Video.findById(id);
         if(!video) {
-            return res.status(404).json({error: "Video not found"})
+            return res.status(404).json({msg: "Video not found"})
         }
         // checking if the loggedin user is the owner of the video
         if(video.user.toString() !== req.user._id.toString()){
-            return res.status(403).json({error: "Unauthorized"})
+            return res.status(403).json({msg: "Unauthorized"})
         }
 
         // updating the video details
@@ -107,7 +107,7 @@ exports.editVideo = async (req, res) =>{
     }
     catch(err){
         res.status(500).json({
-            error: "Internal server error"
+            msg: "Internal server error"
         })
     }
 }
@@ -118,18 +118,18 @@ exports.deleteVideo = async(req, res) =>{
         console.log(id)
         const video = await Video.findById(id);
         if(!video){
-            return res.status(404).json({error: "Video not found"})
+            return res.status(404).json({msg: "Video not found"})
 
         }
         // checking authorization so that only owner of the video can delete it
         if(video.user.toString() !== req.user._id.toString()){
-            return res.status(403).json({error: "Unauthorized"})
+            return res.status(403).json({msg: "Unauthorized"})
         }
         await Video.deleteOne({_id: id});
         res.status(200).json({msg: "Video deleted"})
     }
     catch(err){
-        res.status(500).json({error: err.message})
+        res.status(500).json({msg: err.message})
     }   
 }
 
@@ -168,7 +168,7 @@ exports.likeVideo = async (req, res) => {
     })
     } catch (error) {
         return res.status(500).json({
-            error: error.message
+            msg: error.message
         })
     }
     
@@ -208,7 +208,7 @@ exports.dislikeVideo = async (req, res) => {
     })
     } catch (error) {
         res.status(500).json({
-            error: error.message
+            msg: error.message
         })
     }   
 }
